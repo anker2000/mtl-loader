@@ -2,12 +2,12 @@
 
 This loader enables loading of [.mtl (material files)](https://en.wikipedia.org/wiki/Wavefront_.obj_file#Material_template_library) for the [.obj file format](https://en.wikipedia.org/wiki/Wavefront_.obj_file), importing the specified assets via regular import statements, to take advantage of webpacks hashing/cache-busting etc.
 
-The loader matches references to assets matching **.(jpeg|jpg|mpc|mps|mpb|cxc|cxs|cxb|png|tga)**, and imports them via a regular import statement, returing the materials defintion with all asset references replaced with the relevant webpack reference.
+The loader matches references to assets matching ```.(jpeg|jpg|mpc|mps|mpb|cxc|cxs|cxb|png|tga)```, and imports them via a regular import statement, returing the materials defintion with all asset references replaced with the relevant webpack reference.
 
 ## Installation
 
 ```
-$ npm install --save-dev mtl-loader
+$ npm install mtl-loader --save-dev
 ```
 
 ## Usage
