@@ -1,31 +1,34 @@
 module.exports = function (source) {
   // Match all occurences of various texture/image formats
-  const matches = source.match(/ (.*\.(jpeg|jpg|mpc|mps|mpb|cxc|cxs|cxb|png|tga))/g);
-  let trimmedMatches = [];
+  var matches = source.match(/ (.*\.(jpeg|jpg|mpc|mps|mpb|cxc|cxs|cxb|png|tga))/g);
+  var trimmedMatches = [];
 
   if (matches) {
     // Make them unique
-    const uniqueMatches = matches.filter((value, index, self) => self.indexOf(value) === index);
+    var uniqueMatches = matches.filter((value, index, self) => self.indexOf(value) === index);
     // Trim away matched space at first char
     trimmedMatches = uniqueMatches.map(item => item.trim());
   }
 
   // Define variable holding the final output from loader
-  let result = '';
+  var result = '';
 
   // Iterate over matches
   // - Replace occurences of filenames with a reference to a variable instead
   // - Append an import statement for the relevant matched texture/image as a incremental variable called asset${i}
-  let replacedSource = source;
+  var replacedSource = source;
   for (let i=0; i<trimmedMatches.length; i++) {
-    replacedSource = replacedSource.replace(new RegExp(trimmedMatches[i], 'g'), "${asset" + i +"}");
-    result += `import asset${i} from './${trimmedMatches[i]}';\n`;
+    replacedSource = replacedSource.replace(new RegExp(trimmedMatches[i], 'g'), '" + asset' + i +' +"');
+    result += "var asset" + i + " = require('./" + trimmedMatches[i] +"');\n";
   }
 
-  result += `
-const output = \`${replacedSource}\`;
+  result += "\nvar arr = [];\n";
+  var replacedArr = replacedSource.split("\n");
+  for (let j=0; j<replacedArr.length; j++) {
+    result += "arr.push(\"" + replacedArr[j] + "\");\n";
+  }
 
-export default output;`;
+  result += "\nmodule.exports = arr.join(\"\\n\");";
 
   return result;
 };

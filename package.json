@@ -1,6 +1,6 @@
 {
   "name": "mtl-loader",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A webpack loader for .mtl files",
   "main": "index.js",
   "scripts": {
