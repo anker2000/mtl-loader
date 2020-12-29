@@ -19,7 +19,7 @@ module.exports = function (source) {
   var replacedSource = source;
   for (let i=0; i<trimmedMatches.length; i++) {
     replacedSource = replacedSource.replace(new RegExp(trimmedMatches[i], 'g'), '" + asset' + i +' +"');
-    result += "var asset" + i + " = require('./" + trimmedMatches[i] +"');\n";
+    result += "var asset" + i + " = (typeof require('./" + trimmedMatches[i] +"') == \"string\") ? require('./" + trimmedMatches[i] +"') : require('./" + trimmedMatches[i] +"').default;\n";
   }
 
   result += "\nvar arr = [];\n";
